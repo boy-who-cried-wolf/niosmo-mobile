@@ -26,4 +26,5 @@ flutter:
   assets:
     - assets/images/
     - assets/images/niosmo_logo.png
+    - assets/images/my_money_medic_logo.png
     - assets/icons/

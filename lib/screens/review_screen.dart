@@ -1,8 +1,39 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'user_details_screen.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({super.key});
+
+  void _showUserDetailsForm(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.backgroundColor,
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(16),
+            ),
+          ),
+          child: SingleChildScrollView(
+            child: const UserDetailsScreen(),
+          ),
+        ),
+      ),
+    ).then((value) {
+      if (value != null) {
+        // TODO: Handle the form data
+        print('Form submitted with data: $value');
+        // Navigate to the next screen
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,22 +103,8 @@ class ReviewScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.primaryColor,
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                ),
-                child: const Text(
-                  'Let\'s Go!',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                onPressed: () => _showUserDetailsForm(context),
+                child: const Text('Let\'s Go!'),
               ),
             ),
             const SizedBox(height: 32),
