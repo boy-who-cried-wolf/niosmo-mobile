@@ -8,7 +8,7 @@ class FeaturesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,12 +18,12 @@ class FeaturesSection extends StatelessWidget {
             icon: Icons.access_time,
           ),
           
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
           Text(
             'Why Choose PulseCheck?',
-            style: AppTheme.heading2,
+            style: AppTheme.heading2.copyWith(fontSize: 20),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           
           // Features list
           _buildFeatureItem(Icons.lock, 'Secure, Private & Protected'),
@@ -36,7 +36,7 @@ class FeaturesSection extends StatelessWidget {
 
   Widget _buildFeatureItem(IconData icon, String text) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         children: [
           Container(
@@ -45,11 +45,14 @@ class FeaturesSection extends StatelessWidget {
               color: AppTheme.cardBackgroundColor,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: AppTheme.primaryColor),
+            child: Icon(icon, color: AppTheme.primaryColor, size: 20),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
           Expanded(
-            child: Text(text, style: AppTheme.bodyText),
+            child: Text(
+              text,
+              style: AppTheme.bodyText.copyWith(fontSize: 14),
+            ),
           ),
         ],
       ),

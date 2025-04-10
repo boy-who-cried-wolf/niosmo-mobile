@@ -16,7 +16,7 @@ class FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppTheme.cardBackgroundColor,
         borderRadius: BorderRadius.circular(12),
@@ -24,26 +24,26 @@ class FeatureCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: AppTheme.primaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, color: AppTheme.primaryColor),
+            child: Icon(icon, color: AppTheme.primaryColor, size: 20),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: AppTheme.heading3,
+                  style: AppTheme.heading3.copyWith(fontSize: 16),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 2),
                 Text(
                   description,
-                  style: AppTheme.caption,
+                  style: AppTheme.caption.copyWith(fontSize: 12),
                 ),
               ],
             ),
@@ -51,7 +51,7 @@ class FeatureCard extends StatelessWidget {
           const Icon(
             Icons.arrow_forward_ios,
             color: Colors.white,
-            size: 16,
+            size: 14,
           ),
         ],
       ),

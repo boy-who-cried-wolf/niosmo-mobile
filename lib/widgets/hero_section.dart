@@ -9,28 +9,28 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 600,
+      height: 400,
       width: double.infinity,
       child: BackgroundPattern(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'Feeling Financially Stressed?',
                 style: AppTheme.heading1.copyWith(
-                  fontSize: 40,
+                  fontSize: 32,
                   height: 1.2,
                   fontWeight: FontWeight.w700,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 20,
+                  horizontal: 16,
+                  vertical: 16,
                 ),
                 decoration: BoxDecoration(
                   color: AppTheme.cardBackgroundColor,
@@ -40,8 +40,8 @@ class HeroSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                   text: TextSpan(
                     style: AppTheme.bodyText.copyWith(
-                      fontSize: 20,
-                      height: 1.5,
+                      fontSize: 16,
+                      height: 1.4,
                       color: Colors.white.withOpacity(0.8),
                     ),
                     children: [
@@ -49,7 +49,7 @@ class HeroSection extends StatelessWidget {
                       TextSpan(
                         text: 'PulseCheck',
                         style: AppTheme.bodyText.copyWith(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                       ),
@@ -57,7 +57,7 @@ class HeroSection extends StatelessWidget {
                       TextSpan(
                         text: 'MyMoneyMedic',
                         style: AppTheme.bodyText.copyWith(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: Colors.white,
                         ),
                       ),
@@ -65,7 +65,7 @@ class HeroSection extends StatelessWidget {
                       TextSpan(
                         text: 'Get Better',
                         style: AppTheme.bodyText.copyWith(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: AppTheme.primaryColor,
                         ),
                       ),
@@ -73,9 +73,9 @@ class HeroSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -88,20 +88,20 @@ class HeroSection extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.primaryColor,
                     foregroundColor: Colors.black,
-                    minimumSize: const Size(double.infinity, 56),
+                    minimumSize: const Size(double.infinity, 48),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28),
+                      borderRadius: BorderRadius.circular(24),
                     ),
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
-                      vertical: 16,
+                      horizontal: 24,
+                      vertical: 12,
                     ),
                   ),
                   child: Text(
                     'Get Your FREE Pulse Check Now',
                     style: AppTheme.bodyText.copyWith(
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

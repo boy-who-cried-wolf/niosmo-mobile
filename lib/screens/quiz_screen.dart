@@ -109,45 +109,46 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                 child: Icon(
                   Icons.construction_rounded,
                   color: AppTheme.primaryColor,
-                  size: 32,
+                  size: 28,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               Text(
                 'In Development',
                 style: AppTheme.heading3.copyWith(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
                 'This feature is currently under development. More updates and improvements will be available soon!',
                 style: AppTheme.bodyText.copyWith(
                   color: Colors.white.withOpacity(0.7),
-                  height: 1.5,
+                  height: 1.4,
+                  fontSize: 13,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 style: TextButton.styleFrom(
                   backgroundColor: AppTheme.primaryColor,
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 12,
+                    horizontal: 28,
+                    vertical: 10,
                   ),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: const Text(
                   'Got it!',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -171,7 +172,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
       children: [
         Container(
           height: 4,
-          margin: const EdgeInsets.symmetric(horizontal: 24),
+          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(2),
             child: Stack(
@@ -221,7 +222,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           child: Align(
             alignment: Alignment.centerRight,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
               decoration: BoxDecoration(
                 color: AppTheme.cardBackgroundColor,
                 borderRadius: BorderRadius.circular(12),
@@ -264,7 +265,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   Widget _buildQuestion() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -282,8 +283,8 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -302,26 +303,27 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
               'What are your major',
               style: AppTheme.heading2.copyWith(
                 height: 1.2,
-                fontSize: 24,
+                fontSize: 18,
               ),
               textAlign: TextAlign.center,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           Text(
             'financial concerns?',
             style: AppTheme.heading2.copyWith(
               height: 1.3,
-              fontSize: 28,
+              fontSize: 22,
               color: Colors.white.withOpacity(0.9),
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text(
             'Select the option that best describes your situation',
             style: AppTheme.caption.copyWith(
               color: Colors.white.withOpacity(0.7),
+              fontSize: 11,
             ),
             textAlign: TextAlign.center,
           ),
@@ -360,13 +362,13 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
             },
             child: TextButton.icon(
               onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.arrow_back_rounded, size: 18),
-              label: const Text('Back'),
+              icon: const Icon(Icons.arrow_back_rounded, size: 16),
+              label: const Text('Back', style: TextStyle(fontSize: 14)),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white70,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
+                  horizontal: 12,
+                  vertical: 8,
                 ),
               ),
             ),
@@ -397,9 +399,7 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   Widget _buildNextButton() {
     final bool isEnabled = selectedConcern != null;
     return Container(
-      width: double.infinity,
-      height: 56,
-      margin: const EdgeInsets.symmetric(horizontal: 24),
+      height: 48,
       decoration: BoxDecoration(
         color: isEnabled ? AppTheme.primaryColor : Colors.white.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
@@ -428,23 +428,16 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
                   'Next',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(width: 12),
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_forward_rounded,
-                    color: Colors.white,
-                    size: 18,
-                  ),
+                const SizedBox(width: 8),
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Colors.white,
+                  size: 16,
                 ),
               ],
             ),
@@ -473,15 +466,12 @@ class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
           child: Column(
             children: [
               _buildProgressBar(),
-              const SizedBox(height: 16),
-
               // Logo
               Image.asset(
                 'assets/images/my_money_medic_logo.png',
                 height: 80,
               ),
-              const SizedBox(height: 16),
-
+              const SizedBox(height: 12),
               // Question with gradient
               _buildQuestion(),
               const SizedBox(height: 16),

@@ -122,7 +122,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
               ),
               // Main content
               SingleChildScrollView(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(16),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -130,7 +130,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                     children: [
                       // Welcome card with glass effect
                       Container(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
@@ -140,7 +140,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                               Colors.white.withOpacity(0.05),
                             ],
                           ),
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: Colors.white.withOpacity(0.1),
                             width: 1,
@@ -148,8 +148,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.2),
-                              blurRadius: 16,
-                              offset: const Offset(0, 8),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
                             ),
                           ],
                         ),
@@ -169,53 +169,84 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                                 'Welcome to',
                                 style: AppTheme.heading2.copyWith(
                                   height: 1.2,
-                                  fontSize: 28,
+                                  fontSize: 20,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            ShineEffect(
-                              child: Text(
-                                'PulseCheck',
-                                style: AppTheme.heading2.copyWith(
-                                  height: 1.2,
-                                  fontSize: 42,
-                                  fontWeight: FontWeight.bold,
-                                  foreground: Paint()
-                                    ..shader = LinearGradient(
-                                      colors: [
-                                        Colors.white,
-                                        AppTheme.primaryColor,
-                                        Colors.white,
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ).createShader(
-                                      const Rect.fromLTWH(0, 0, 200, 70),
+                            const SizedBox(height: 2),
+                            Stack(
+                              children: [
+                                // Base outline text
+                                Text(
+                                  'PulseCheck',
+                                  style: AppTheme.heading2.copyWith(
+                                    height: 1.2,
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    foreground: Paint()
+                                      ..style = PaintingStyle.stroke
+                                      ..strokeWidth = 2.0
+                                      ..shader = LinearGradient(
+                                        colors: [
+                                          Colors.white.withOpacity(0.2),
+                                          AppTheme.primaryColor.withOpacity(0.2),
+                                          Colors.white.withOpacity(0.2),
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ).createShader(
+                                        const Rect.fromLTWH(0, 0, 200, 70),
+                                      ),
+                                  ),
+                                ),
+                                // Enhanced flowing gradient effect
+                                ShineEffect(
+                                  child: Text(
+                                    'PulseCheck',
+                                    style: AppTheme.heading2.copyWith(
+                                      height: 1.2,
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      foreground: Paint()
+                                        ..shader = LinearGradient(
+                                          colors: [
+                                            Colors.transparent,
+                                            Colors.white.withOpacity(0.9),
+                                            AppTheme.primaryColor,
+                                            Colors.white.withOpacity(0.9),
+                                            Colors.transparent,
+                                          ],
+                                          stops: const [0.0, 0.3, 0.5, 0.7, 1.0],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ).createShader(
+                                          const Rect.fromLTWH(0, 0, 200, 70),
+                                        ),
                                     ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 8),
                             Text(
                               'Your journey to financial wellness starts here',
                               style: AppTheme.bodyText.copyWith(
                                 color: Colors.white.withOpacity(0.7),
-                                fontSize: 16,
+                                fontSize: 14,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 32),
-                      // Form fields with enhanced styling
+                      const SizedBox(height: 16),
                       Text(
                         'Let\'s get started',
                         style: AppTheme.heading3.copyWith(
                           color: Colors.white.withOpacity(0.9),
+                          fontSize: 16,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                       _buildAnimatedTextField(
                         controller: _firstNameController,
                         labelText: 'First Name',
@@ -226,7 +257,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                           return null;
                         },
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                       _buildAnimatedTextField(
                         controller: _emailController,
                         labelText: 'Email',
@@ -241,9 +272,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                           return null;
                         },
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 8),
                       Container(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
@@ -253,7 +284,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                               Colors.white.withOpacity(0.05),
                             ],
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: Colors.white.withOpacity(0.1),
                             width: 1,
@@ -262,8 +293,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                         child: Row(
                           children: [
                             SizedBox(
-                              width: 24,
-                              height: 24,
+                              width: 18,
+                              height: 18,
                               child: TweenAnimationBuilder<double>(
                                 duration: const Duration(milliseconds: 200),
                                 tween: Tween(begin: 0.0, end: _agreeToEmail ? 1.0 : 0.0),
@@ -282,12 +313,13 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                                 },
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            const SizedBox(width: 8),
                             Expanded(
                               child: Text(
                                 'Email me my PulseCheck result!',
                                 style: AppTheme.bodyText.copyWith(
                                   color: Colors.white.withOpacity(0.9),
+                                  fontSize: 14,
                                 ),
                               ),
                             ),
@@ -302,10 +334,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                             style: AppTheme.caption.copyWith(color: Colors.red),
                           ),
                         ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 8),
                       Container(
                         width: double.infinity,
-                        height: 56,
+                        height: 44,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
@@ -315,17 +347,17 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                               AppTheme.primaryColor.withOpacity(0.8),
                             ],
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
                               color: AppTheme.primaryColor.withOpacity(0.3),
-                              blurRadius: 12,
-                              offset: const Offset(0, 4),
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
                             ),
                             BoxShadow(
                               color: AppTheme.primaryColor.withOpacity(0.1),
-                              blurRadius: 24,
-                              offset: const Offset(0, 8),
+                              blurRadius: 16,
+                              offset: const Offset(0, 6),
                             ),
                           ],
                         ),
@@ -333,14 +365,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: _isLoading ? null : _handleSubmit,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(10),
                             splashColor: Colors.white.withOpacity(0.2),
                             highlightColor: Colors.white.withOpacity(0.1),
                             child: Center(
                               child: _isLoading
                                 ? const SizedBox(
-                                    width: 24,
-                                    height: 24,
+                                    width: 18,
+                                    height: 18,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
                                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
@@ -353,15 +385,15 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                                         'Start Your Journey',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
-                                      const SizedBox(width: 8),
+                                      const SizedBox(width: 6),
                                       Icon(
                                         Icons.arrow_forward_rounded,
                                         color: Colors.white.withOpacity(0.8),
-                                        size: 20,
+                                        size: 14,
                                       ),
                                     ],
                                   ),
@@ -369,12 +401,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
                       Container(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.05),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Column(
                           children: [
@@ -382,10 +414,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                               'The PulseCheck is a general assessment tool and should not be considered financial advice. All information is secured and confidential.',
                               style: AppTheme.caption.copyWith(
                                 color: Colors.white.withOpacity(0.6),
+                                fontSize: 12,
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 8),
                             Hero(
                               tag: 'privacy-policy',
                               child: TextButton(
@@ -393,11 +426,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                                 style: TextButton.styleFrom(
                                   foregroundColor: AppTheme.primaryColor,
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 8,
+                                    horizontal: 12,
+                                    vertical: 6,
                                   ),
                                 ),
-                                child: const Text('Privacy Policy'),
+                                child: const Text(
+                                  'Privacy Policy',
+                                  style: TextStyle(fontSize: 12),
+                                ),
                               ),
                             ),
                           ],
@@ -422,7 +458,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
   }) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -448,49 +484,50 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                   controller: controller,
                   style: AppTheme.bodyText.copyWith(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                   keyboardType: keyboardType,
                   decoration: InputDecoration(
                     labelText: labelText,
                     labelStyle: AppTheme.bodyText.copyWith(
                       color: Colors.white.withOpacity(0.6),
-                      fontSize: 16,
+                      fontSize: 14,
                     ),
                     filled: true,
                     fillColor: Colors.transparent,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
                     ),
                     errorStyle: AppTheme.caption.copyWith(
                       color: Colors.red.withOpacity(0.8),
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 16,
+                      horizontal: 16,
+                      vertical: 14,
                     ),
                     prefixIcon: Icon(
                       keyboardType == TextInputType.emailAddress
                           ? Icons.email_outlined
                           : Icons.person_outline,
                       color: Colors.white.withOpacity(0.6),
+                      size: 20,
                     ),
                   ),
                   validator: validator,
@@ -506,7 +543,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
                       child: Icon(
                         Icons.check_circle_outline,
                         color: AppTheme.primaryColor.withOpacity(0.8),
-                        size: 20,
+                        size: 18,
                       ),
                     ),
                   ),
