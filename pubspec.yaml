@@ -1,19 +1,29 @@
 name: niosmo
 description: "A new Flutter project."
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0+1
 
 environment:
-  sdk: ^3.7.2
+  sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
+  cupertino_icons: ^1.0.2
+  google_fonts: ^6.1.0
+  flutter_svg: ^2.0.9
+  cached_network_image: ^3.3.1
+  provider: ^6.1.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/niosmo_logo.png
+    - assets/icons/
