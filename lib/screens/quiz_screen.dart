@@ -15,7 +15,7 @@ class QuizScreen extends StatefulWidget {
   State<QuizScreen> createState() => _QuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
+class _QuizScreenState extends State<QuizScreen> with TickerProviderStateMixin {
   final List<String> financialConcerns = [
     'Income',
     'Mortgage',
@@ -28,8 +28,357 @@ class _QuizScreenState extends State<QuizScreen> {
   ];
 
   String? selectedConcern;
-  int currentStep = 2; // Starting from step 2 after user details
+  int currentStep = 2;
   final int totalSteps = 5;
+  late AnimationController _controller;
+  late Animation<double> _fadeInAnimation;
+  late Animation<Offset> _slideAnimation;
+  late AnimationController _pulseController;
+  late Animation<double> _pulseAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+
+    _fadeInAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+    ));
+
+    _pulseController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
+    _pulseAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.2,
+    ).animate(CurvedAnimation(
+      parent: _pulseController,
+      curve: Curves.easeInOut,
+    ));
+
+    _controller.forward();
+    _pulseController.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildProgressBar() {
+    return Column(
+      children: [
+        Container(
+          height: 4,
+          margin: const EdgeInsets.symmetric(horizontal: 24),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(2),
+            child: Stack(
+              children: [
+                // Background
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                // Animated Progress
+                AnimatedBuilder(
+                  animation: _pulseAnimation,
+                  builder: (context, child) {
+                    return Stack(
+                      children: [
+                        // Glow effect
+                        Positioned.fill(
+                          child: Transform.scale(
+                            scale: _pulseAnimation.value,
+                            child: LinearProgressIndicator(
+                              value: currentStep / totalSteps,
+                              backgroundColor: Colors.transparent,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                AppTheme.primaryColor.withOpacity(0.3),
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Main progress bar
+                        LinearProgressIndicator(
+                          value: currentStep / totalSteps,
+                          backgroundColor: Colors.transparent,
+                          valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 24, top: 8),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: AppTheme.cardBackgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppTheme.primaryColor.withOpacity(0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    margin: const EdgeInsets.only(right: 6),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryColor,
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                  ),
+                  Text(
+                    '$currentStep / $totalSteps',
+                    style: AppTheme.caption.copyWith(
+                      color: Colors.white70,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuestion() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppTheme.cardBackgroundColor,
+            AppTheme.cardBackgroundColor.withOpacity(0.8),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.1),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          ShaderMask(
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [
+                AppTheme.primaryColor,
+                Colors.white,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ).createShader(bounds),
+            child: Text(
+              'What are your major',
+              style: AppTheme.heading2.copyWith(
+                height: 1.2,
+                fontSize: 24,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'financial concerns?',
+            style: AppTheme.heading2.copyWith(
+              height: 1.3,
+              fontSize: 28,
+              color: Colors.white.withOpacity(0.9),
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Select the option that best describes your situation',
+            style: AppTheme.caption.copyWith(
+              color: Colors.white.withOpacity(0.7),
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavigationButtons() {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppTheme.backgroundColor.withOpacity(0),
+            AppTheme.backgroundColor,
+          ],
+        ),
+      ),
+      child: Row(
+        children: [
+          // Back Button
+          TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 300),
+            tween: Tween(begin: 0.0, end: 1.0),
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: Offset(-20 * (1 - value), 0),
+                child: Opacity(
+                  opacity: value,
+                  child: child,
+                ),
+              );
+            },
+            child: TextButton.icon(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(Icons.arrow_back_rounded, size: 18),
+              label: const Text('Back'),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white70,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          // Next Button
+          Expanded(
+            child: TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 300),
+              tween: Tween(begin: 0.0, end: 1.0),
+              builder: (context, value, child) {
+                return Transform.translate(
+                  offset: Offset(20 * (1 - value), 0),
+                  child: Opacity(
+                    opacity: value,
+                    child: child,
+                  ),
+                );
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: selectedConcern != null
+                        ? [
+                            AppTheme.primaryColor,
+                            AppTheme.primaryColor.withOpacity(0.8),
+                          ]
+                        : [
+                            Colors.white.withOpacity(0.1),
+                            Colors.white.withOpacity(0.05),
+                          ],
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: selectedConcern != null
+                      ? [
+                          BoxShadow(
+                            color: AppTheme.primaryColor.withOpacity(0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ]
+                      : null,
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: selectedConcern != null
+                        ? () {
+                            // TODO: Handle next step
+                          }
+                        : null,
+                    borderRadius: BorderRadius.circular(8),
+                    splashColor: Colors.white.withOpacity(0.2),
+                    highlightColor: Colors.white.withOpacity(0.1),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            width: selectedConcern != null ? 32 : 0,
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 300),
+                              opacity: selectedConcern != null ? 1.0 : 0.0,
+                              child: const Icon(
+                                Icons.arrow_forward_rounded,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,115 +392,222 @@ class _QuizScreenState extends State<QuizScreen> {
         title: const Text('PulseCheck'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          // Progress Bar
-          Container(
-            height: 4,
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(2),
-              child: LinearProgressIndicator(
-                value: currentStep / totalSteps,
-                backgroundColor: Colors.white.withOpacity(0.2),
-                valueColor: AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
+      body: FadeTransition(
+        opacity: _fadeInAnimation,
+        child: SlideTransition(
+          position: _slideAnimation,
+          child: Column(
+            children: [
+              _buildProgressBar(),
+              const SizedBox(height: 16),
+
+              // Logo
+              Image.asset(
+                'assets/images/my_money_medic_logo.png',
+                height: 80,
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 24),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '$currentStep / $totalSteps',
-                style: AppTheme.caption.copyWith(color: Colors.white70),
+              const SizedBox(height: 16),
+
+              // Question with gradient
+              _buildQuestion(),
+              const SizedBox(height: 16),
+
+              // Options in 2 columns
+              Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio: 4.0,
+                  ),
+                  itemCount: financialConcerns.length,
+                  itemBuilder: (context, index) {
+                    final concern = financialConcerns[index];
+                    final isSelected = selectedConcern == concern;
+
+                    return TweenAnimationBuilder<double>(
+                      duration: Duration(milliseconds: 200 + (index * 50)),
+                      tween: Tween(begin: 0.0, end: 1.0),
+                      builder: (context, value, child) {
+                        return Transform.translate(
+                          offset: Offset(0, 20 * (1 - value)),
+                          child: Opacity(
+                            opacity: value,
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() => selectedConcern = concern);
+                            // Add ripple effect
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            if (isSelected) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Selected: $concern'),
+                                  backgroundColor: AppTheme.primaryColor.withOpacity(0.9),
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  margin: const EdgeInsets.all(24),
+                                  duration: const Duration(milliseconds: 1500),
+                                ),
+                              );
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(8),
+                          splashColor: AppTheme.primaryColor.withOpacity(0.2),
+                          highlightColor: AppTheme.primaryColor.withOpacity(0.1),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOutCubic,
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                            decoration: BoxDecoration(
+                              color: isSelected 
+                                ? AppTheme.primaryColor.withOpacity(0.1)
+                                : AppTheme.cardBackgroundColor,
+                              border: Border.all(
+                                color: isSelected ? AppTheme.primaryColor : Colors.transparent,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              boxShadow: isSelected
+                                ? [
+                                    BoxShadow(
+                                      color: AppTheme.primaryColor.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                    BoxShadow(
+                                      color: AppTheme.primaryColor.withOpacity(0.1),
+                                      blurRadius: 16,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ]
+                                : null,
+                            ),
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    concern,
+                                    style: AppTheme.bodyText.copyWith(
+                                      color: isSelected ? AppTheme.primaryColor : Colors.white,
+                                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                if (isSelected)
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: TweenAnimationBuilder<double>(
+                                      duration: const Duration(milliseconds: 300),
+                                      tween: Tween(begin: 0.0, end: 1.0),
+                                      builder: (context, value, child) {
+                                        return Transform.scale(
+                                          scale: value,
+                                          child: child,
+                                        );
+                                      },
+                                      child: Icon(
+                                        Icons.check_circle_rounded,
+                                        color: AppTheme.primaryColor,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
+              _buildNavigationButtons(),
+            ],
           ),
-          const SizedBox(height: 24),
-
-          // Logo
-          Image.asset(
-            'assets/images/my_money_medic_logo.png',
-            height: 40,
-          ),
-          const SizedBox(height: 32),
-
-          // Question
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'What are your major financial concerns?',
-              style: AppTheme.heading2,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 32),
-
-          // Options
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              itemCount: financialConcerns.length,
-              itemBuilder: (context, index) {
-                final concern = financialConcerns[index];
-                final isSelected = selectedConcern == concern;
-
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: InkWell(
-                    onTap: () => setState(() => selectedConcern = concern),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.cardBackgroundColor,
-                        border: Border.all(
-                          color: isSelected ? AppTheme.primaryColor : Colors.transparent,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        concern,
-                        style: AppTheme.bodyText.copyWith(
-                          color: isSelected ? AppTheme.primaryColor : Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Navigation Buttons
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: Row(
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Back'),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: selectedConcern != null
-                        ? () {
-                            // TODO: Handle next step
-                          }
-                        : null,
-                    child: const Text('Next'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
+    );
+  }
+}
+
+class ShineEffect extends StatefulWidget {
+  final Widget child;
+
+  const ShineEffect({
+    super.key,
+    required this.child,
+  });
+
+  @override
+  State<ShineEffect> createState() => _ShineEffectState();
+}
+
+class _ShineEffectState extends State<ShineEffect> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(
+      begin: -1.0,
+      end: 2.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
+
+    _controller.repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return ShaderMask(
+          shaderCallback: (bounds) {
+            return LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: const [
+                Colors.transparent,
+                Colors.white24,
+                Colors.transparent,
+              ],
+              stops: [
+                _animation.value - 0.3,
+                _animation.value,
+                _animation.value + 0.3,
+              ],
+            ).createShader(bounds);
+          },
+          child: widget.child,
+        );
+      },
     );
   }
 }
