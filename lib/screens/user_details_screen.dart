@@ -99,221 +99,315 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
   Widget build(BuildContext context) {
     return Container(
       color: AppTheme.backgroundColor,
-      padding: const EdgeInsets.all(24),
       child: FadeTransition(
         opacity: _fadeAnimation,
         child: SlideTransition(
           position: _slideAnimation,
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(24),
+          child: Stack(
+            children: [
+              // Background gradient and pattern
+              Positioned.fill(
+                child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        AppTheme.cardBackgroundColor,
-                        AppTheme.cardBackgroundColor.withOpacity(0.8),
+                        AppTheme.backgroundColor,
+                        AppTheme.backgroundColor.withOpacity(0.9),
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.1),
-                      width: 1,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 16,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
                   ),
+                ),
+              ),
+              // Main content
+              SingleChildScrollView(
+                padding: const EdgeInsets.all(24),
+                child: Form(
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ShaderMask(
-                        shaderCallback: (bounds) => LinearGradient(
-                          colors: [
-                            AppTheme.primaryColor,
-                            Colors.white,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ).createShader(bounds),
-                        child: Text(
-                          'Welcome to',
-                          style: AppTheme.heading2.copyWith(
-                            height: 1.3,
-                            fontSize: 28,
+                      // Welcome card with glass effect
+                      Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Colors.white.withOpacity(0.1),
+                              Colors.white.withOpacity(0.05),
+                            ],
                           ),
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.1),
+                            width: 1,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 16,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ShaderMask(
+                              shaderCallback: (bounds) => LinearGradient(
+                                colors: [
+                                  AppTheme.primaryColor,
+                                  Colors.white,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ).createShader(bounds),
+                              child: Text(
+                                'Welcome to',
+                                style: AppTheme.heading2.copyWith(
+                                  height: 1.2,
+                                  fontSize: 28,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            ShineEffect(
+                              child: Text(
+                                'PulseCheck',
+                                style: AppTheme.heading2.copyWith(
+                                  height: 1.2,
+                                  fontSize: 42,
+                                  fontWeight: FontWeight.bold,
+                                  foreground: Paint()
+                                    ..shader = LinearGradient(
+                                      colors: [
+                                        Colors.white,
+                                        AppTheme.primaryColor,
+                                        Colors.white,
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ).createShader(
+                                      const Rect.fromLTWH(0, 0, 200, 70),
+                                    ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Your journey to financial wellness starts here',
+                              style: AppTheme.bodyText.copyWith(
+                                color: Colors.white.withOpacity(0.7),
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 32),
+                      // Form fields with enhanced styling
                       Text(
-                        'PulseCheck',
-                        style: AppTheme.heading2.copyWith(
-                          height: 1.3,
-                          fontSize: 32,
+                        'Let\'s get started',
+                        style: AppTheme.heading3.copyWith(
                           color: Colors.white.withOpacity(0.9),
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        'Enter your details below to start your financial health check',
-                        style: AppTheme.caption.copyWith(
-                          color: Colors.white.withOpacity(0.7),
+                      _buildAnimatedTextField(
+                        controller: _firstNameController,
+                        labelText: 'First Name',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your first name';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      _buildAnimatedTextField(
+                        controller: _emailController,
+                        labelText: 'Email',
+                        keyboardType: TextInputType.emailAddress,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                            return 'Please enter a valid email';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Colors.white.withOpacity(0.1),
+                              Colors.white.withOpacity(0.05),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.1),
+                            width: 1,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: TweenAnimationBuilder<double>(
+                                duration: const Duration(milliseconds: 200),
+                                tween: Tween(begin: 0.0, end: _agreeToEmail ? 1.0 : 0.0),
+                                builder: (context, value, child) {
+                                  return Transform.scale(
+                                    scale: 0.8 + (value * 0.2),
+                                    child: Checkbox(
+                                      value: _agreeToEmail,
+                                      onChanged: (value) => setState(() => _agreeToEmail = value ?? false),
+                                      activeColor: AppTheme.primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                'Email me my PulseCheck result!',
+                                style: AppTheme.bodyText.copyWith(
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (_showErrors && !_agreeToEmail)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            'Please agree to receive your PulseCheck result',
+                            style: AppTheme.caption.copyWith(color: Colors.red),
+                          ),
+                        ),
+                      const SizedBox(height: 24),
+                      Container(
+                        width: double.infinity,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppTheme.primaryColor,
+                              AppTheme.primaryColor.withOpacity(0.8),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppTheme.primaryColor.withOpacity(0.3),
+                              blurRadius: 12,
+                              offset: const Offset(0, 4),
+                            ),
+                            BoxShadow(
+                              color: AppTheme.primaryColor.withOpacity(0.1),
+                              blurRadius: 24,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: _isLoading ? null : _handleSubmit,
+                            borderRadius: BorderRadius.circular(16),
+                            splashColor: Colors.white.withOpacity(0.2),
+                            highlightColor: Colors.white.withOpacity(0.1),
+                            child: Center(
+                              child: _isLoading
+                                ? const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Start Your Journey',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Icon(
+                                        Icons.arrow_forward_rounded,
+                                        color: Colors.white.withOpacity(0.8),
+                                        size: 20,
+                                      ),
+                                    ],
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.05),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              'The PulseCheck is a general assessment tool and should not be considered financial advice. All information is secured and confidential.',
+                              style: AppTheme.caption.copyWith(
+                                color: Colors.white.withOpacity(0.6),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 12),
+                            Hero(
+                              tag: 'privacy-policy',
+                              child: TextButton(
+                                onPressed: () => _showPrivacyPolicy(context),
+                                style: TextButton.styleFrom(
+                                  foregroundColor: AppTheme.primaryColor,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 8,
+                                  ),
+                                ),
+                                child: const Text('Privacy Policy'),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 32),
-                _buildAnimatedTextField(
-                  controller: _firstNameController,
-                  labelText: 'First Name',
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your first name';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                _buildAnimatedTextField(
-                  controller: _emailController,
-                  labelText: 'Email',
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: TweenAnimationBuilder<double>(
-                        duration: const Duration(milliseconds: 200),
-                        tween: Tween(begin: 0.0, end: _agreeToEmail ? 1.0 : 0.0),
-                        builder: (context, value, child) {
-                          return Transform.scale(
-                            scale: 0.8 + (value * 0.2),
-                            child: Checkbox(
-                              value: _agreeToEmail,
-                              onChanged: (value) => setState(() => _agreeToEmail = value ?? false),
-                              activeColor: AppTheme.primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Email me my PulseCheck result!',
-                        style: AppTheme.bodyText,
-                      ),
-                    ),
-                  ],
-                ),
-                if (_showErrors && !_agreeToEmail)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      'Please agree to receive your PulseCheck result',
-                      style: AppTheme.caption.copyWith(color: Colors.red),
-                    ),
-                  ),
-                const SizedBox(height: 24),
-                Container(
-                  width: double.infinity,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        AppTheme.primaryColor,
-                        AppTheme.primaryColor.withOpacity(0.8),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppTheme.primaryColor.withOpacity(0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                      BoxShadow(
-                        color: AppTheme.primaryColor.withOpacity(0.1),
-                        blurRadius: 24,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: _isLoading ? null : _handleSubmit,
-                      borderRadius: BorderRadius.circular(8),
-                      splashColor: Colors.white.withOpacity(0.2),
-                      highlightColor: Colors.white.withOpacity(0.1),
-                      child: Center(
-                        child: _isLoading
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),
-                            )
-                          : const Text(
-                              'Start',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'The PulseCheck is a general assessment tool and should not be considered financial advice. All information is secured and confidential.',
-                  style: AppTheme.caption,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Center(
-                  child: Hero(
-                    tag: 'privacy-policy',
-                    child: TextButton(
-                      onPressed: () => _showPrivacyPolicy(context),
-                      child: const Text('Privacy Policy'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -328,14 +422,19 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
   }) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(16),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.white.withOpacity(0.1),
+            Colors.white.withOpacity(0.05),
+          ],
+        ),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.1),
+          width: 1,
+        ),
       ),
       child: TweenAnimationBuilder<double>(
         duration: const Duration(milliseconds: 200),
@@ -343,58 +442,75 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> with TickerProvid
         builder: (context, scale, child) {
           return Transform.scale(
             scale: scale,
-            child: TextFormField(
-              controller: controller,
-              style: AppTheme.bodyText,
-              keyboardType: keyboardType,
-              decoration: InputDecoration(
-                labelText: labelText,
-                labelStyle: AppTheme.bodyText.copyWith(color: AppTheme.greyTextColor),
-                filled: true,
-                fillColor: AppTheme.cardBackgroundColor,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: Colors.white.withOpacity(0.1),
-                    width: 1,
+            child: Stack(
+              children: [
+                TextFormField(
+                  controller: controller,
+                  style: AppTheme.bodyText.copyWith(
+                    color: Colors.white,
+                    fontSize: 16,
                   ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: Colors.white.withOpacity(0.1),
-                    width: 1,
+                  keyboardType: keyboardType,
+                  decoration: InputDecoration(
+                    labelText: labelText,
+                    labelStyle: AppTheme.bodyText.copyWith(
+                      color: Colors.white.withOpacity(0.6),
+                      fontSize: 16,
+                    ),
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide.none,
+                    ),
+                    errorStyle: AppTheme.caption.copyWith(
+                      color: Colors.red.withOpacity(0.8),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
+                    prefixIcon: Icon(
+                      keyboardType == TextInputType.emailAddress
+                          ? Icons.email_outlined
+                          : Icons.person_outline,
+                      color: Colors.white.withOpacity(0.6),
+                    ),
                   ),
+                  validator: validator,
+                  onChanged: (value) => setState(() {}),
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: AppTheme.primaryColor.withOpacity(0.5),
-                    width: 2,
+                // Shine effect on focus
+                if (controller.text.isNotEmpty)
+                  Positioned(
+                    right: 16,
+                    top: 0,
+                    bottom: 0,
+                    child: Center(
+                      child: Icon(
+                        Icons.check_circle_outline,
+                        color: AppTheme.primaryColor.withOpacity(0.8),
+                        size: 20,
+                      ),
+                    ),
                   ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                    color: Colors.red,
-                    width: 1,
-                  ),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                    color: Colors.red,
-                    width: 2,
-                  ),
-                ),
-                errorStyle: AppTheme.caption.copyWith(color: Colors.red),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-              ),
-              validator: validator,
-              onChanged: (value) => setState(() {}),
+              ],
             ),
           );
         },
