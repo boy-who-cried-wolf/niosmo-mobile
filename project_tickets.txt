@@ -1,0 +1,662 @@
+# Financial Analysis Mobile App - Detailed Project Tickets
+Total Hours: 248
+Flutter Version: 3.19.0
+Dart Version: 3.3.0
+
+## EPIC 1: Project Setup & Infrastructure (32 hours)
+
+### 1. Initialize Flutter Project (3h)
+- Create new Flutter project using Flutter 3.19.0 and Dart 3.3.0
+- Configure project structure following clean architecture principles (lib/features, lib/core, lib/shared)
+- Set up .gitignore and project documentation
+Reference: https://docs.flutter.dev/get-started/test-drive
+
+### 2. Configure iOS Project Settings (2h)
+- Set up iOS deployment target (iOS 12.0+), capabilities, and permissions in Xcode
+- Configure Swift version and iOS build settings
+- Set up iOS signing certificates and provisioning profiles
+Reference: https://docs.flutter.dev/deployment/ios
+
+### 3. Configure Android Project Settings (2h)
+- Set up Android SDK versions (min: 21, target: 34), permissions, and manifest entries
+- Configure Kotlin version (1.9.22) and Gradle settings
+- Set up Android signing configuration
+Reference: https://docs.flutter.dev/deployment/android
+
+### 4. Environment Configuration (3h)
+- Set up development, staging, and production environments using flutter_flavors
+- Configure environment-specific variables and API endpoints
+- Implement environment switching mechanism
+Example: https://pub.dev/packages/flutter_flavorizr
+
+### 5. App Icons Setup (2h)
+- Create and generate app icons for all required iOS and Android sizes
+- Implement adaptive icons for Android
+- Set up development/staging/production specific icons
+Tool Reference: https://pub.dev/packages/flutter_launcher_icons
+
+### 6. Splash Screen Configuration (2h)
+- Design and implement native splash screens for both platforms
+- Add animated transition from splash to app
+- Ensure proper handling of dark/light mode
+Reference: https://pub.dev/packages/flutter_native_splash
+
+### 7. CI/CD Pipeline Setup (4h)
+- Set up GitHub Actions or Bitbucket Pipelines for automated builds
+- Configure automated testing and code quality checks
+- Implement automated versioning system
+Example: https://github.com/marketplace/actions/flutter-action
+
+### 8. Error Tracking Setup (3h)
+- Integrate Sentry.io or Firebase Crashlytics for error reporting
+- Set up custom error boundaries and error logging
+- Configure crash reporting for different environments
+Reference: https://docs.sentry.io/platforms/flutter/
+
+### 9. Base Theme Configuration (2h)
+- Create theme constants following Material 3 guidelines
+- Implement dark/light theme switching mechanism
+- Set up custom color schemes and typography
+Example: https://m3.material.io/theme-builder
+
+### 10. Shared Preferences Setup (2h)
+- Implement secure storage for user preferences
+- Create preference keys management system
+- Set up preference change listeners
+Package: https://pub.dev/packages/shared_preferences
+
+### 11. Network Layer Implementation (4h)
+- Set up Dio HTTP client with interceptors for authentication
+- Implement retry mechanism and timeout handling
+- Create network error handling system
+Reference: https://pub.dev/packages/dio
+
+### 12. API Service Interface (2h)
+- Create base API service with REST endpoints
+- Implement response models and serialization
+- Set up API versioning support
+Example: https://pub.dev/packages/retrofit
+
+### 13. Secure Storage Setup (2h)
+- Implement Flutter Secure Storage for sensitive data
+- Create encryption helpers for local data
+- Set up secure key storage mechanism
+Package: https://pub.dev/packages/flutter_secure_storage
+
+## EPIC 2: Authentication & Onboarding (36 hours)
+
+### 1. Login Screen UI (3h)
+- Create modern login form with email/password fields
+- Implement form validation and error states
+- Add "Remember Me" and "Forgot Password" functionality
+Design Reference: https://dribbble.com/tags/login_screen
+
+### 2. Login Screen Logic (4h)
+- Implement authentication flow with JWT token handling
+- Add biometric authentication option
+- Create secure token storage and refresh mechanism
+Example: https://pub.dev/packages/jwt_decoder
+
+### 3. Registration Screen UI (2h)
+- Design multi-step registration form with progress indicator
+- Add field validation and password strength indicator
+- Implement terms & conditions acceptance
+Reference: https://material.io/design/usability/forms.html
+
+### 4. Registration Form Validation (2h)
+- Implement real-time form validation using form_validator
+- Create custom validators for password strength, email format
+- Add duplicate email check against API
+Package: https://pub.dev/packages/form_validator
+
+### 5. Password Reset Flow UI (2h)
+- Design password reset request screen with email input
+- Create reset code verification screen
+- Implement new password setup screen with confirmation
+Reference: https://material.io/design/communication/confirmation-acknowledgement.html
+
+### 6. Password Reset Logic (2h)
+- Implement password reset API integration
+- Add email verification code handling
+- Create secure password update mechanism
+Example: https://pub.dev/packages/pin_code_fields
+
+### 7. Onboarding Carousel UI (3h)
+- Design animated feature showcase carousel
+- Create custom page indicators
+- Implement smooth transitions between screens
+Reference: https://pub.dev/packages/introduction_screen
+
+### 8. Onboarding Carousel Logic (2h)
+- Implement page controller for carousel
+- Add skip/next functionality
+- Create completion tracking system
+Example: https://pub.dev/packages/smooth_page_indicator
+
+### 9. Email Verification UI (2h)
+- Design email verification screen with code input
+- Add resend code functionality
+- Create success/error states
+Reference: https://material.io/design/communication/confirmation-acknowledgement.html
+
+### 10. Email Verification Logic (2h)
+- Implement verification code validation
+- Add countdown timer for resend functionality
+- Create verification status tracking
+Package: https://pub.dev/packages/timer_count_down
+
+### 11. Google OAuth Integration (2h)
+- Set up Google Sign-In SDK
+- Implement OAuth flow with token handling
+- Add user profile data retrieval
+Reference: https://pub.dev/packages/google_sign_in
+
+### 12. Apple OAuth Integration (2h)
+- Configure Apple Sign In capabilities
+- Implement Sign in with Apple flow
+- Handle credential storage securely
+Reference: https://pub.dev/packages/sign_in_with_apple
+
+### 13. Biometric Authentication (2h)
+- Implement fingerprint/face ID authentication
+- Add secure key storage for biometric data
+- Create fallback authentication mechanism
+Package: https://pub.dev/packages/local_auth
+
+### 14. Session Management (2h)
+- Create session timeout handling
+- Implement automatic token refresh
+- Add multi-device session management
+Example: https://pub.dev/packages/jwt_decoder
+
+## EPIC 3: Quiz Framework (44 hours)
+
+### 1. Quiz Navigation System (3h)
+- Implement custom route management for quiz flow
+- Create transition animations between questions
+- Add progress persistence mechanism
+Reference: https://api.flutter.dev/flutter/widgets/Navigator-class.html
+
+### 2. Quiz State Management (3h)
+- Set up Riverpod/Bloc for quiz state management
+- Implement answer tracking system
+- Create quiz completion status tracking
+Package: https://pub.dev/packages/flutter_riverpod
+
+### 3. Progress Indicator Design (2h)
+- Create animated linear progress indicator
+- Add step counter display
+- Implement progress persistence
+Example: https://material.io/components/progress-indicators
+
+### 4. Progress Animation (2h)
+- Add smooth progress transitions
+- Implement milestone indicators
+- Create completion celebration animation
+Reference: https://pub.dev/packages/lottie
+
+### 5. Quiz Option Selection Component (2h)
+- Create reusable option selection widget
+- Implement selection animations
+- Add accessibility support
+Reference: https://material.io/components/selection-controls
+
+### 6. Option Selection Animation (2h)
+- Design and implement selection feedback animations
+- Add haptic feedback
+- Create transition effects
+Package: https://pub.dev/packages/animations
+
+### 7. Back/Next Navigation UI (2h)
+- Design navigation buttons with states
+- Implement gesture navigation support
+- Add transition animations
+Reference: https://material.io/design/navigation/understanding-navigation.html
+
+### 8. Navigation Logic with Validation (2h)
+- Implement validation before navigation
+- Create data persistence between screens
+- Add navigation history tracking
+Example: https://api.flutter.dev/flutter/widgets/Navigator-class.html
+
+### 9. Quiz Data Models (2h)
+- Create quiz question models
+- Implement answer models
+- Set up quiz progress tracking model
+Reference: https://dart.dev/guides/language/language-tour#classes
+
+### 10. Quiz Saving Mechanism (2h)
+- Implement auto-save functionality
+- Create progress recovery system
+- Add offline storage support
+Package: https://pub.dev/packages/hive
+
+### 11. Quiz Resume Functionality (2h)
+- Create quiz session management
+- Implement progress restoration
+- Add session expiry handling
+Reference: https://api.flutter.dev/flutter/services/RestorationManager-class.html
+
+### 12. Quiz Timeout Handling (2h)
+- Implement question timeout system
+- Add timeout warnings
+- Create timeout action handling
+Package: https://pub.dev/packages/timer_count_down
+
+### 13. Quiz Completion Screen (2h)
+- Design completion celebration screen
+- Add score summary display
+- Implement share results option
+Reference: https://material.io/design/communication/confirmation-acknowledgement.html
+
+### 14. Quiz Results Preview (2h)
+- Create results summary component
+- Implement chart visualizations
+- Add detailed breakdown view
+Package: https://pub.dev/packages/fl_chart
+
+### 15. Quiz Data Submission (2h)
+- Implement API submission logic
+- Add retry mechanism
+- Create submission progress indicator
+Reference: https://pub.dev/packages/dio
+
+### 16. Loading States (2h)
+- Design loading indicators
+- Implement skeleton screens
+- Add loading state management
+Package: https://pub.dev/packages/shimmer
+
+### 17. Error Handling (2h)
+- Create error display components
+- Implement retry mechanisms
+- Add error logging system
+Reference: https://docs.flutter.dev/testing/errors
+
+### 18. Offline Support (2h)
+- Implement offline data storage
+- Add sync mechanism
+- Create conflict resolution system
+Package: https://pub.dev/packages/connectivity_plus
+
+### 19. Quiz Analytics (2h)
+- Set up analytics tracking
+- Implement user behavior tracking
+- Create analytics dashboard
+Reference: https://firebase.google.com/docs/analytics
+
+### 20. Completion Animation (2h)
+- Design celebration animations
+- Add sound effects
+- Implement haptic feedback
+Package: https://pub.dev/packages/lottie
+
+## EPIC 4: Individual Quiz Screens (44 hours)
+
+### 1. Financial Concerns Quiz UI (2h)
+- Create concern selection interface
+- Implement multi-select capability
+- Add priority ranking system
+Reference: https://material.io/components/chips
+
+### 2. Financial Concerns Quiz Logic (2h)
+- Implement concern scoring system
+- Create priority calculation
+- Add data validation
+Example: https://pub.dev/packages/collection
+
+### 3. Income Assessment Quiz UI (2h)
+- Design income input interface
+- Create income source selection
+- Implement currency formatting
+Package: https://pub.dev/packages/intl
+
+### 4. Income Assessment Quiz Logic (2h)
+- Implement income calculation
+- Add tax bracket detection
+- Create income verification
+Reference: https://pub.dev/packages/decimal
+
+### 5. Expense Tracking Quiz UI (2h)
+- Create expense category interface
+- Implement expense input system
+- Add recurring expense options
+Reference: https://material.io/components/data-tables
+
+### 6. Expense Tracking Quiz Logic (2h)
+- Implement expense categorization
+- Create budget calculation
+- Add spending pattern detection
+Package: https://pub.dev/packages/money2
+
+### 7. Debt Analysis Quiz UI (2h)
+- Design debt input interface
+- Create interest rate calculator
+- Implement debt type selection
+Reference: https://material.io/design/layout/responsive-layout-grid.html
+
+### 8. Debt Analysis Quiz Logic (2h)
+- Implement debt calculation system
+- Create payment plan generator
+- Add interest projection
+Package: https://pub.dev/packages/charts_flutter
+
+### 9. Savings Goals Quiz UI (2h)
+- Design goal setting interface
+- Create timeline selection
+- Implement progress visualization
+Reference: https://material.io/design/communication/data-visualization.html
+
+### 10. Savings Goals Quiz Logic (2h)
+- Implement goal calculation
+- Create milestone tracking
+- Add achievement projections
+Package: https://pub.dev/packages/fl_chart
+
+### 11. Investment Profile Quiz UI (2h)
+- Design risk assessment interface
+- Create investment preference selection
+- Implement portfolio visualization
+Reference: https://material.io/design/communication/data-visualization.html
+
+### 12. Investment Profile Quiz Logic (2h)
+- Implement risk scoring system
+- Create portfolio allocation
+- Add investment recommendations
+Package: https://pub.dev/packages/charts_flutter
+
+### 13. Risk Tolerance Quiz UI (2h)
+- Create scenario-based questions
+- Implement risk slider
+- Add visual risk indicators
+Reference: https://material.io/components/sliders
+
+### 14. Risk Tolerance Quiz Logic (2h)
+- Implement risk calculation
+- Create risk profile matching
+- Add recommendation engine
+Package: https://pub.dev/packages/ml_algo
+
+### 15. Retirement Planning Quiz UI (2h)
+- Design retirement calculator interface
+- Create timeline visualization
+- Implement goal setting system
+Reference: https://material.io/design/communication/data-visualization.html
+
+### 16. Retirement Planning Quiz Logic (2h)
+- Implement retirement calculation
+- Create projection scenarios
+- Add inflation adjustment
+Package: https://pub.dev/packages/decimal
+
+### 17. Emergency Fund Quiz UI (2h)
+- Design fund calculation interface
+- Create expense categorization
+- Implement priority setting
+Reference: https://material.io/components/lists
+
+### 18. Emergency Fund Quiz Logic (2h)
+- Implement fund calculation
+- Create recommendation system
+- Add risk assessment
+Package: https://pub.dev/packages/money2
+
+### 19. Financial Knowledge Quiz UI (2h)
+- Create knowledge assessment interface
+- Implement question progression
+- Add learning resources
+Reference: https://material.io/components/cards
+
+### 20. Financial Knowledge Quiz Logic (2h)
+- Implement scoring system
+- Create knowledge gap analysis
+- Add personalized recommendations
+Package: https://pub.dev/packages/collection
+
+## EPIC 5: Results & Analysis (40 hours)
+
+### 1. Results Dashboard UI (3h)
+- Design main dashboard layout
+- Create score visualization
+- Implement section navigation
+Reference: https://material.io/design/layout/responsive-layout-grid.html
+
+### 2. Financial Health Score Component (2h)
+- Create score calculation system
+- Implement visual representation
+- Add score breakdown
+Package: https://pub.dev/packages/fl_chart
+
+### 3. Score Calculation Logic (2h)
+- Implement weighted scoring system
+- Create benchmark comparison
+- Add trend analysis
+Reference: https://pub.dev/packages/ml_algo
+
+### 4. Detailed Analysis Sections (2h)
+- Design category breakdown views
+- Create comparison charts
+- Implement drill-down capability
+Package: https://pub.dev/packages/charts_flutter
+
+### 5. Interactive Charts Component (2h)
+- Create reusable chart widgets
+- Implement interaction handlers
+- Add animation effects
+Reference: https://pub.dev/packages/syncfusion_flutter_charts
+
+### 6. Chart Data Binding (2h)
+- Implement data transformation
+- Create update mechanisms
+- Add real-time updates
+Package: https://pub.dev/packages/rxdart
+
+### 7. Recommendation Cards (2h)
+- Design recommendation layout
+- Create action buttons
+- Implement card interaction
+Reference: https://material.io/components/cards
+
+### 8. Recommendation Logic (2h)
+- Implement recommendation engine
+- Create prioritization system
+- Add personalization logic
+Package: https://pub.dev/packages/ml_algo
+
+### 9. PDF Report Generator (3h)
+- Create report template
+- Implement PDF generation
+- Add customization options
+Package: https://pub.dev/packages/pdf
+
+### 10. Report Sharing (2h)
+- Implement share mechanisms
+- Create export options
+- Add file handling
+Package: https://pub.dev/packages/share_plus
+
+### 11. Comparison Visualizations (2h)
+- Design comparison charts
+- Create benchmark displays
+- Implement trend visualization
+Reference: https://material.io/design/communication/data-visualization.html
+
+### 12. Historical Data Comparison (2h)
+- Implement time-series analysis
+- Create trend detection
+- Add progress tracking
+Package: https://pub.dev/packages/charts_flutter
+
+### 13. Progress Tracking Features (2h)
+- Design progress indicators
+- Create milestone tracking
+- Implement goal comparison
+Reference: https://material.io/components/progress-indicators
+
+### 14. Goal Setting Interface (2h)
+- Create goal input system
+- Implement timeline selection
+- Add progress visualization
+Package: https://pub.dev/packages/table_calendar
+
+### 15. Export Data Functionality (3h)
+- Implement data export formats
+- Create backup system
+- Add restore capability
+Package: https://pub.dev/packages/path_provider
+
+## EPIC 6: Profile & Settings (28 hours)
+
+### 1. Profile Screen UI (2h)
+- Design profile layout
+- Create edit interface
+- Implement avatar handling
+Reference: https://material.io/design/layout/responsive-layout-grid.html
+
+### 2. Profile Editing (2h)
+- Implement edit functionality
+- Create validation system
+- Add image upload
+Package: https://pub.dev/packages/image_picker
+
+### 3. Settings Screen UI (2h)
+- Design settings layout
+- Create preference sections
+- Implement toggle controls
+Reference: https://material.io/components/switches
+
+### 4. Theme Switching (2h)
+- Implement theme selection
+- Create custom themes
+- Add preview capability
+Package: https://pub.dev/packages/flutter_displaymode
+
+### 5. Notification Preferences (2h)
+- Create notification settings
+- Implement schedule options
+- Add custom notifications
+Package: https://pub.dev/packages/flutter_local_notifications
+
+### 6. Language Switching (2h)
+- Implement language selection
+- Create translation system
+- Add language detection
+Package: https://pub.dev/packages/easy_localization
+
+### 7. Data Privacy Settings (2h)
+- Create privacy controls
+- Implement data management
+- Add export options
+Reference: https://material.io/design/usability/accessibility.html
+
+### 8. Data Backup Options (2h)
+- Implement backup system
+- Create restore functionality
+- Add cloud sync
+Package: https://pub.dev/packages/cloud_firestore
+
+### 9. Account Deletion Flow (2h)
+- Design deletion process
+- Implement data cleanup
+- Add confirmation system
+Reference: https://material.io/design/communication/confirmation-acknowledgement.html
+
+### 10. About/Help Section (2h)
+- Create help content
+- Implement FAQ system
+- Add support contact
+Reference: https://material.io/design/navigation/search.html
+
+### 11. Feedback Mechanism (2h)
+- Design feedback interface
+- Implement submission system
+- Add response handling
+Package: https://pub.dev/packages/url_launcher
+
+### 12. Version Info Display (2h)
+- Create version checker
+- Implement update notification
+- Add changelog display
+Package: https://pub.dev/packages/package_info_plus
+
+## EPIC 7: Performance & Optimization (28 hours)
+
+### 1. Image Caching (2h)
+- Implement image cache system
+- Create cache management
+- Add cleanup mechanism
+Package: https://pub.dev/packages/cached_network_image
+
+### 2. App Startup Optimization (2h)
+- Implement lazy loading
+- Create startup sequence
+- Add splash screen optimization
+Reference: https://docs.flutter.dev/perf/rendering/shader-compilation
+
+### 3. Lazy Loading Implementation (2h)
+- Create lazy loading system
+- Implement placeholder widgets
+- Add loading indicators
+Package: https://pub.dev/packages/lazy_load_scrollview
+
+### 4. List Pagination (2h)
+- Implement infinite scroll
+- Create page loading
+- Add refresh mechanism
+Package: https://pub.dev/packages/infinite_scroll_pagination
+
+### 5. Memory Usage Optimization (2h)
+- Implement memory monitoring
+- Create cleanup system
+- Add performance tracking
+Reference: https://docs.flutter.dev/perf/memory
+
+### 6. State Persistence (2h)
+- Implement state saving
+- Create restore mechanism
+- Add error recovery
+Package: https://pub.dev/packages/hydrated_bloc
+
+### 7. Offline Capability (2h)
+- Implement offline storage
+- Create sync mechanism
+- Add conflict resolution
+Package: https://pub.dev/packages/hive
+
+### 8. Animation Optimization (2h)
+- Optimize animation performance
+- Implement efficient rebuilds
+- Add frame monitoring
+Reference: https://docs.flutter.dev/perf/rendering/performance
+
+### 9. Widget Caching (2h)
+- Implement widget cache
+- Create rebuild optimization
+- Add memory management
+Reference: https://api.flutter.dev/flutter/widgets/Cache-class.html
+
+### 10. Performance Monitoring (2h)
+- Set up performance tracking
+- Create monitoring dashboard
+- Add alert system
+Package: https://pub.dev/packages/performance
+
+## EPIC 8: Testing & Quality Assurance (8 hours)
+
+### 1. Core Unit Tests (3h)
+- Test authentication and quiz logic
+- Verify data models and calculations
+- Test critical business rules
+Reference: https://docs.flutter.dev/testing/unit-tests
+
+### 2. Essential Integration Tests (3h)
+- Test complete quiz flow
+- Verify authentication process
+- Test offline functionality
+Package: https://pub.dev/packages/integration_test
+
+### 3. Basic Accessibility (2h)
+- Test screen reader compatibility
+- Verify RTL layout
+- Test basic navigation
+Reference: https://docs.flutter.dev/development/accessibility-and-localization 
